@@ -176,10 +176,11 @@ user is likely to be entering account information."
 ;;;###autoload
 (defun ledger-capf--accts (str)
   "Cape backend to prompt for account names."
-  (if (ledger-capf--acct-get-payees-p str)
-      (ledger-capf--acct-get-all-payees)
-    (if  (ledger-capf--acct-get-accts-p str)
-        (ledger-capf--acct-get-all-accts))))
+  (when (file-exists-p ledger-capf-acct-master-file)
+    (if (ledger-capf--acct-get-payees-p str)
+        (ledger-capf--acct-get-all-payees)
+      (if  (ledger-capf--acct-get-accts-p str)
+          (ledger-capf--acct-get-all-accts)))))
 
 ;;;###autoload
 (defun ledger-capf (&optional interactive)
